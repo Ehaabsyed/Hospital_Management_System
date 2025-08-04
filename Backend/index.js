@@ -11,7 +11,7 @@ import { isAdminauthenticated } from './src/middlewares/auth.js'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
 const app = express()
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174','https://hospital-management-system-nine-kohl.vercel.app/'];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -46,7 +46,6 @@ app.get('/api/isAdmin', (req, res) => {
 
 })
 app.use('/api/user', userRoute)
-// app.use('/uploads', express.static('uploads'));
 app.use('/api/doctor', doctorRoute)
 app.use('/api/admin', isAdminauthenticated, adminRoute)
 app.use('/api/message', messageRoute)

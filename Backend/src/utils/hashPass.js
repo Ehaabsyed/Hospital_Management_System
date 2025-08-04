@@ -7,7 +7,6 @@ export const hashPass = async (password) => {
             throw new Error("Password is required for hashing");
         }
 
-        console.log("Password to hash:", password);
 
         const hash = await bcrypt.hash(password, 10);
         return hash;

@@ -290,7 +290,6 @@ export const changePass = async (req, res) => {
         }
 
         const newPassword = await hashPass(password);
-        console.log("Old:", user.password, "New:", newPassword);
 
         user.password = newPassword;
         await user.save();
