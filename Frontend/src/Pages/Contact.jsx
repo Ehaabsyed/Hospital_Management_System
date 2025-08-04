@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+
 function Contact() {
   const {
     register,
@@ -11,86 +12,93 @@ function Contact() {
   } = useForm()
 
   const onSubmit = async (data) => {
-    //timer of 2s
     await new Promise((resolve) => setTimeout(resolve, 2000))
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/message/send`,{data},{withCredentials:true})
-    .then(response=>{
-      // console.log(response.data);
-      if(response.data.status){
-        toast.success("Message sent successfully")
-      }else{
-        toast.error(response.data.message)
-      }
-      
-    })
-    .catch(err=>{
-      console.log(err);
-      
-    })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/message/send`, { data }, { withCredentials: true })
+      .then(response => {
+        if (response.data.status) {
+          toast.success("Message sent successfully")
+        } else {
+          toast.error(response.data.message)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
     reset()
   }
+
   return (
-    <div className=' min-h-screen w-full gradient pt-22'>
-      <h1 className='text-3xl font-bold text-white tracking-tight text-center'>Have a question, feedback, or just want to say hello? We're here to help. Fill out the form below and we'll get back to you as soon as possible.</h1>
-      <div className="form mt-15 shadow w-3/5 h-full place-self-center border-2 border-white p-7 rounded-2xl ">
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-          <div className="flex gap-5">
+    <div className='min-h-screen w-full gradient py-16 px-4'>
+      <h1 className='text-3xl md:text-4xl font-bold text-white tracking-tight text-center max-w-4xl mx-auto'>
+        Have a question, feedback, or just want to say hello? We're here to help. Fill out the form below and we'll get back to you as soon as possible.
+      </h1>
+
+      <div className="form mt-12 bg-opacity-10 backdrop-blur border border-white p-6 md:p-10 rounded-2xl max-w-3xl mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
+          {/* Name Fields */}
+          <div className="flex flex-col md:flex-row gap-4">
             <input
               type="text"
               placeholder='First name'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-5 w-full border border-white bg-transparent text-white placeholder-white rounded-full focus:outline-none'
               {...register("firstname", {
                 required: "Firstname is required",
                 minLength: { value: 3, message: "Min 3 letters required" }
               })}
             />
-
-
             <input
               type="text"
               placeholder='Second name'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-5 w-full border border-white bg-transparent text-white placeholder-white rounded-full focus:outline-none'
               {...register("secondname", {
                 required: "Secondname is required",
                 minLength: { value: 3, message: "Min 3 letters required" }
               })}
             />
           </div>
-          <div className="flex gap-5">
+
+          {/* Contact Fields */}
+          <div className="flex flex-col md:flex-row gap-4">
             <input
-              type="text"
+              type="email"
               placeholder='Email'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-5 w-full border border-white bg-transparent text-white placeholder-white rounded-full focus:outline-none'
               {...register("email", {
                 required: "Email is required",
-                minLength: { value: 3, message: "Min 3 letters required" }
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Invalid email"
+                }
               })}
             />
-
-
             <input
-              type="text"
+              type="tel"
               placeholder='Mobile'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-5 w-full border border-white bg-transparent text-white placeholder-white rounded-full focus:outline-none'
               {...register("phone", {
-                required: "phone is required",
-                minLength: { value: 10, message: "Min 10 letters required" }
+                required: "Phone is required",
+                minLength: { value: 10, message: "Min 10 digits required" }
               })}
             />
           </div>
-            <textarea placeholder='Your message!' className=' py-3 px-7 w-full border-white border rounded-3xl'  {...register("message", { required: true })}></textarea>
 
+          {/* Message Field */}
+          <textarea
+            placeholder='Your message!'
+            rows={4}
+            className='py-3 px-5 w-full border border-white bg-transparent text-white placeholder-white rounded-3xl focus:outline-none resize-none'
+            {...register("message", { required: true })}
+          ></textarea>
 
-
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className='bg-blue-600 cursor-pointer font-bold text-white py-2 rounded-full mt-2 hover:bg-blue-700 transition'
+            className='bg-blue-600 hover:bg-blue-700 transition py-2 rounded-full font-bold text-white'
           >
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </form>
-
       </div>
     </div>
   )

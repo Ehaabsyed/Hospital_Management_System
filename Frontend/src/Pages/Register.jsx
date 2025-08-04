@@ -16,144 +16,145 @@ function Register() {
 
   const onSubmit = async (data) => {
     const toastId = toast.loading("Creating user....");
-
-    //timer of 2s
     await new Promise((resolve) => setTimeout(resolve, 2000))
+
     console.log(data)
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`,{data},{withCredentials:true})
-    .then(response=>{
-      console.log(response.data);
-      if(response.data.status){
-        toast.success("Registration Successfull", { id: toastId })
-        navigate("/login")
-      }else{
-        toast.error(response.data.message, { id: toastId })
-      }
-    })
-    .catch(err=>{
-      console.log(err);
-      toast.error(err, { id: toastId })
-      
-    })
-    
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`, { data }, { withCredentials: true })
+      .then(response => {
+        if (response.data.status) {
+          toast.success("Registration Successful", { id: toastId })
+          navigate("/login")
+        } else {
+          toast.error(response.data.message, { id: toastId })
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error("Registration failed", { id: toastId })
+      })
 
-reset()
+    reset()
   }
+
   return (
-    <div className='h-screen w-full gradient flex justify-center items-center absolute top-0 left-0'>
-      <div className="logo absolute z-10 top-3 left-10">
-        <img src="/logo.png" className='w-30 h-30' alt="" />
-      </div>
-      <div className="text w-[38%] text-[#004966]">
-        <h2 className='text-7xl font-bold'>Join us today!</h2>
-        <h2 className='text-5xl mt-3 font-bold'>It only takes a few seconds to get started.</h2>
+    <div className='min-h-screen w-full gradient flex flex-col md:flex-row justify-center items-center px-4 py-10'>
+
+      {/* Logo */}
+      <div className="logo absolute z-10 top-3 md:left-5 left-[50%] -translate-x-[50%]">
+        <img src="/logo.png" className='md:w-20 md:h-20 h-30 w-30 object-contain' alt="Logo" />
       </div>
 
-      <div className="form shadow w-[45vw] h-[fit] py-7 ml-20 border-2 border-white rounded-2xl p-5">
+      {/* Left Text */}
+      <div className="text hidden md:block md:w-1/2 text-[#004966] px-6">
+        <h2 className='text-5xl font-bold'>Join us today!</h2>
+        <h2 className='text-3xl mt-3 font-bold'>It only takes a few seconds to get started.</h2>
+      </div>
+
+      {/* Right Form */}
+      <div className="form w-full md:w-[45%]  backdrop-blur-sm shadow-lg rounded-2xl border-2 border-white p-6">
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-          <div className="flex gap-3">
+
+          {/* Row 1: First Name & Last Name */}
+          <div className="flex flex-col md:flex-row gap-3">
             <input
               type="text"
               placeholder='First Name'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("firstname", {
-                required: "firstname is required",
+                required: "First name is required",
                 minLength: { value: 3, message: "Min 3 letters required" }
               })}
             />
-            
-
             <input
               type="text"
               placeholder='Last Name'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("secondname", {
-                required: "secondname is required",
+                required: "Last name is required",
                 minLength: { value: 3, message: "Min 3 letters required" }
               })}
             />
-            
           </div>
-          <div className="flex gap-3">
+
+          {/* Row 2: Email & Password */}
+          <div className="flex flex-col md:flex-row gap-3">
             <input
               type="text"
               placeholder='Email'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("email", {
                 required: "Email is required",
                 minLength: { value: 3, message: "Min 3 letters required" }
               })}
             />
-            
             <input
               type="password"
               placeholder='Password'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("password", {
                 required: "Password is required",
                 minLength: { value: 3, message: "Min 3 letters required" }
               })}
             />
-            
           </div>
-          <div className="flex gap-3">
+
+          {/* Row 3: Mobile & NIC */}
+          <div className="flex flex-col md:flex-row gap-3">
             <input
               type="text"
               placeholder='Mobile'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("phone", {
-                required: "phone is required",
-                minLength: { value: 3, message: "Min 3 letters required" }
+                required: "Phone is required",
+                minLength: { value: 3, message: "Min 3 digits required" }
               })}
             />
-            
-
             <input
               type="text"
-              placeholder='5 digit Nic code'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              placeholder='5-digit NIC code'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("nic", {
-                required: "nic is required",
-                minLength: { value: 5, message: "max 5 digits required" }
+                required: "NIC is required",
+                minLength: { value: 5, message: "Exactly 5 digits required" },
+                maxLength: { value: 5, message: "Exactly 5 digits required" }
               })}
-              
             />
-            
           </div>
-          <div className="flex gap-3">
+
+          {/* Row 4: DOB & Gender */}
+          <div className="flex flex-col md:flex-row gap-3">
             <input
-              type="Date"
-              placeholder='Date of birth'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              type="date"
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("dob", {
-                required: "Date of birth is required",
-                minLength: { value: 3, message: "Min 3 letters required" }
+                required: "Date of birth is required"
               })}
             />
-            
-
             <select
               id="gender"
               {...register("gender", { required: true })}
-              className="border px-7 w-full rounded-full py-2 border-white"
+              className="border px-4 py-2 w-full rounded-full border-white"
             >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
           </div>
-          <div className="adress">
+
+          {/* Address */}
+          <div>
             <input
               type="text"
-              placeholder='Adress'
-              className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+              placeholder='Address'
+              className='py-2 px-4 w-full border-white border rounded-full'
               {...register("address", {
-                required: "Adress is required",
-                minLength: { value: 5, message: "adress required" }
+                required: "Address is required",
+                minLength: { value: 5, message: "Minimum 5 characters" }
               })}
-              
             />
           </div>
+
+          {/* Checkbox */}
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
@@ -166,6 +167,7 @@ reset()
             </label>
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
             disabled={isSubmitting}
@@ -173,7 +175,11 @@ reset()
           >
             {isSubmitting ? "Signing up..." : "Sign Up"}
           </button>
-          <p className='text-center'>Already have an account ? <Link className='text-blue-600 font-bold' to="/login">Log In</Link></p>
+
+          <p className='text-center text-sm'>
+            Already have an account?{" "}
+            <Link className='text-blue-600 font-bold' to="/login">Log In</Link>
+          </p>
         </form>
       </div>
     </div>

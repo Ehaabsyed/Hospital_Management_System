@@ -15,46 +15,47 @@ function Login() {
   } = useForm()
 
   const onSubmit = async (data) => {
-    const toastId = toast.loading("Creating user....");
-
-    //timer of 2s
+    const toastId = toast.loading("Logging user....")
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    //axios
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, { data }, { withCredentials: true })
       .then(response => {
-        // console.log(response.data);
         if (response.data.status) {
           toast.success("Logged In Successfully", { id: toastId })
           navigate("/")
         } else {
           toast.error(response.data.message, { id: toastId })
         }
-
       })
       .catch(err => {
-        console.log(err);
-        toast.error(err, { id: toastId })
+        console.log(err)
+        toast.error("Login failed", { id: toastId })
       })
+
     reset()
   }
 
   return (
-    <div className='h-screen w-full gradient flex justify-center items-center absolute top-0 left-0'>
-      <div className="logo absolute z-10 top-3 left-10">
-        <img src="/logo.png" className='w-30 h-30' alt="" />
-      </div>
-      <div className="text w-[38%] text-[#004966]">
-        <h2 className='text-7xl font-bold'>Welcome Back!</h2>
-        <h2 className='text-5xl mt-3 font-bold'>Log in to continue your health journey with MediNest.</h2>
+    <div className='min-h-screen w-full gradient flex flex-col md:flex-row justify-center items-center relative px-4 py-8'>
+
+      {/* Logo */}
+      <div className="logo absolute z-10 top-3 md:left-5 left-[50%] -translate-x-[50%]">
+        <img src="/logo.png" className='w-40 h-40 md:h-20 md:w-20 object-contain' alt="MediNest Logo" />
       </div>
 
-      <div className="form shadow w-[30vw] h-[fit] py-15 ml-20 border-2 border-white rounded-2xl p-5">
+      {/* Welcome Text - hidden on small screens */}
+      <div className="text md:w-[38%] text-[#004966] hidden md:block">
+        <h2 className='text-5xl font-bold'>Welcome Back!</h2>
+        <h2 className='text-3xl mt-3 font-bold'>Log in to continue your health journey with MediNest.</h2>
+      </div>
+
+      {/* Form */}
+      <div className="form shadow w-full md:w-[30vw] max-w-md py-10 mt-10 md:mt-0 border-2 border-white rounded-2xl px-6 backdrop-blur-sm">
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
           <input
             type="text"
             placeholder='Email'
-            className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+            className='py-2 px-5 w-full border-white border rounded-full'
             {...register("email", {
               required: "Email is required",
               minLength: { value: 3, message: "Min 3 letters required" }
@@ -69,7 +70,7 @@ function Login() {
           <input
             type="password"
             placeholder='Password'
-            className='md:py-2 py-1 px-7 w-full border-white border rounded-full'
+            className='py-2 px-5 w-full border-white border rounded-full'
             {...register("password", {
               required: "Password is required",
               minLength: { value: 3, message: "Min 3 letters required" }
@@ -81,7 +82,7 @@ function Login() {
             </p>
           )}
 
-          <div className="text-left text-sm text-blue-600 hover:underline pr-3">
+          <div className="text-right text-sm text-blue-600 hover:underline pr-3">
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
@@ -93,12 +94,11 @@ function Login() {
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
 
-          <p className='text-center'>
+          <p className='text-center text-sm'>
             Don’t have an account?{" "}
             <Link className='text-blue-600 font-bold' to="/register">Sign up</Link>
           </p>
         </form>
-
       </div>
     </div>
   )

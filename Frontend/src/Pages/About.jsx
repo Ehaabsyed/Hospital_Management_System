@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import Lenis from 'lenis'
+import React, { useEffect, useState } from 'react';
 
 const departments = [
   {
@@ -33,7 +32,6 @@ const departments = [
     title: "Dermatology",
     info: "Diagnoses and treats skin, hair, and nail conditions."
   },
-
   {
     image: "/depart/ent.webp",
     title: "ENT",
@@ -54,94 +52,72 @@ const departments = [
     title: "Radiology",
     info: "Uses imaging to diagnose and treat diseases."
   },
-
 ];
+
 function About() {
+  const [doctors, setdoctors] = useState([]);
 
-
-
-  const [doctors, setdoctors] = useState([])
-
-  //get all doctors
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/doctor/getalldoctors`)
       .then(response => {
-        setdoctors(response.data.doctors)
-
+        setdoctors(response.data.doctors);
       })
       .catch(err => {
         console.log(err);
-
-      })
-
-
-
-  }, [])
-
-
-
-  // console.log(doctors);
+      });
+  }, []);
 
   return (
-    <div className=' min-h-screen gradient w-full'>
-      <div className="about h-full mb-20 gap-5 w-full flex justify-center items-center">
-        <div className="text w-[60%] ml-12 mt-30">
-          <h2 className='text-4xl font-bold tracking-tighter text-[#004966]'>HospitalMate is a modern, full-stack hospital management system designed to streamline healthcare operations for hospitals, clinics, and medical centers.</h2>
-          <h4 className='text-2xl font-medium tracking-tighter text-[#277594] mt-7'>This platform allows administrators, doctors, and patients to manage appointments, medical records, and visit statuses in a simple and secure environment. The goal is to reduce manual workload, improve accuracy, and offer a better experience for both patients and staff.</h4>
+    <div className='min-h-screen gradient w-full px-4 sm:px-6 lg:px-10'>
+      {/* About Section */}
+      <div className="about flex flex-col lg:flex-row items-center justify-center mb-20 gap-10 pt-10">
+        <div className="text w-full lg:w-3/5">
+          <h2 className='text-3xl sm:text-4xl font-bold tracking-tight text-[#004966]'>
+            HospitalMate is a modern, full-stack hospital management system designed to streamline healthcare operations for hospitals, clinics, and medical centers.
+          </h2>
+          <h4 className='text-xl sm:text-2xl font-medium tracking-tight text-[#277594] mt-5'>
+            This platform allows administrators, doctors, and patients to manage appointments, medical records, and visit statuses in a simple and secure environment. The goal is to reduce manual workload, improve accuracy, and offer a better experience for both patients and staff.
+          </h4>
         </div>
-        <div className="image mt-30 w-[40%] mr-12">
-          < img loading='lazy' src="/about-bg.jpg" alt="" className=' rounded-2xl' />
-
+        <div className="image w-full lg:w-2/5">
+          <img loading='lazy' src="/about-bg.jpg" alt="" className='rounded-2xl w-full h-auto object-cover' />
         </div>
       </div>
-      <div className="services pb-15 w-full ">
+
+      {/* Services Section */}
+      <div className="services">
         <h1 className='text-center text-3xl font-bold text-white mt-7'>Our Services</h1>
-
-        <div className="cards pl-11 mt-12 flex justify-start gap-5 items-center flex-wrap">
-
-
-          {departments.map((item, index) => {
-            return (
-              <div key={index} className="card mt-5 bg-white transform transition duration-300 ease-in-out hover:scale-103 cursor-pointer shadow-md  h-70 w-60  flex flex-col justify-start items-center rounded-lg overflow-hidden">
-                < img loading='lazy' src={item.image} className="w-full h-[62%] object-cover" alt="" />
-                <div className="info h-[38%] w-full flex flex-col p-2">
-                  <h3 className="font-bold text-lg mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-700">
-                    {item.info}
-                  </p>
-                </div>
+        <div className="cards mt-10 flex flex-wrap justify-center gap-5">
+          {departments.map((item, index) => (
+            <div key={index} className="card bg-white shadow-md md:h-72 md:w-60 w-90 h-70 rounded-lg overflow-hidden transform transition duration-300 hover:scale-105 cursor-pointer">
+              <img loading='lazy' src={item.image} className="w-full h-[60%] object-cover" alt={item.title} />
+              <div className="p-3">
+                <h3 className="font-bold text-lg mb-1">{item.title}</h3>
+                <p className="text-sm text-gray-700">{item.info}</p>
               </div>
-            )
-          })}
-
-
+            </div>
+          ))}
         </div>
       </div>
-      <div className="doctors pb-15 pl-12">
-        <h1 className='text-center text-3xl font-bold text-white mt-7'>Our Doctors</h1>
-        <div className="cards mt-12 flex justify-start gap-5 items-center flex-wrap ">
-          {
-            doctors.map(doctor => {
-              return (
-                <div key={doctor._id} className="h-70 doctor w-60 bg-white shadow-lg rounded-2xl overflow-hidden transform transition duration-300 ease-in-out hover:scale-105">
-                  < img loading='lazy'
-                    src={doctor.image} 
-                    alt="Doctor"
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-4">
-                    <h2 className="text-xl font-semibold text-gray-800">Dr. {doctor.firstname} {doctor.secondname}</h2>
-                    <p className="text-sm text-gray-600 mt-1">Department: {doctor.department}</p>
-                  </div>
-                </div>
-              )
-            })
-          }
-        </div>
 
+      {/* Doctors Section */}
+      <div className="doctors mt-16">
+        <h1 className='text-center text-3xl font-bold text-white mt-7'>Our Doctors</h1>
+        <div className="cards mt-10 pb-5 flex flex-wrap justify-center gap-5">
+          {doctors.map((doctor) => (
+            <div key={doctor._id} className="doctor bg-white shadow-lg md:w-60 w-90 rounded-2xl overflow-hidden transform transition duration-300 hover:scale-105">
+              <img loading='lazy' src={doctor.image} alt="Doctor" className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold text-gray-800">Dr. {doctor.firstname} {doctor.secondname}</h2>
+                <p className="text-sm text-gray-600 mt-1">{doctor.qualification}</p>
+                <p className="text-sm text-gray-600 mt-1">Department: {doctor.department}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default About
+export default About;
