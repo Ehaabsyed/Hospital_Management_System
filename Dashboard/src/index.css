@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+img {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logo-img {
+    /* box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.5); */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.gradient{
+    background: #1ca3d9;
+background: linear-gradient(180deg, rgba(28, 163, 217, 1) 0%, rgba(174, 206, 214, 1) 100%, rgba(237, 221, 83, 1) 0%);
+}
+.footer{
+    background: #1ca3d9;
+background: linear-gradient(360deg, rgba(28, 163, 217, 1) 0%, rgba(174, 206, 214, 1) 100%, rgba(237, 221, 83, 1) 0%);
+}
+.shadow{
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+/* Hide scrollbar for all elements */
+* {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
