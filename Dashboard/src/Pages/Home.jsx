@@ -26,7 +26,7 @@ function Home() {
 
  useEffect(() => {
 
-    axios.get(`http://localhost:3000/isAdmin`, { withCredentials: true })
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/isAdmin`, { withCredentials: true })
     .then(response=>{
       if(!response.data.status){
         toast.error(response.data.message)
