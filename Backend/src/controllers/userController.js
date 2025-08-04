@@ -55,7 +55,7 @@ export const createUser = async (req, res) => {
         );
         const token = generateToken(newUser._id);
         res.cookie("patientToken", token)
-        res.json({status:true, message: "User created successfully", user: newUser });
+        res.json({ status: true, message: "User created successfully", user: newUser });
 
 
     }
@@ -100,9 +100,19 @@ export const userlogin = async (req, res) => {
         } else {
             const token = generateToken(existUser._id);
             if (userWithoutPassword.role === "Admin") {
-                res.cookie("adminToken", token);
+                res.cookie("adminToken", token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "None",
+                    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+                });
             } else {
-                res.cookie("patientToken", token);
+                res.cookie("patientToken", token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "None",
+                    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+                });
             }
 
 
@@ -116,7 +126,7 @@ export const userlogin = async (req, res) => {
 }
 // Function to create a new doctor
 export const createDoctor = async (req, res) => {
-    
+
     try {
         const {
             firstname, secondname, email, password, phone,
@@ -143,7 +153,7 @@ export const createDoctor = async (req, res) => {
             folder: 'doctors',
         });
         // console.log(result);
-        
+
         const doctorData = new userModel({
             firstname,
             secondname,
