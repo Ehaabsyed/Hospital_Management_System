@@ -11,15 +11,26 @@ import { isAdminauthenticated } from './src/middlewares/auth.js'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
 const app = express()
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174','https://hospital-management-system-nine-kohl.vercel.app'];
+
+const allowedOrigins = [
+  'https://hospital-management-system-nine-kohl.vercel.app',       // Patient site
+  'https://hospital-management-system-admin-delta.vercel.app'      // Admin site
+];
 
 app.use(cors({
-  origin: 'https://hospital-management-system-nine-kohl.vercel.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
+
 app.use(fileUpload({
-  useTempFiles:true
+  useTempFiles: true
 }));
 app.use(cookieParser())
 app.use(express.json())
