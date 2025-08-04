@@ -41,7 +41,7 @@ function Register() {
 
       {/* Logo */}
       <div className="logo absolute z-10 top-3 md:left-5 left-[50%] -translate-x-[50%]">
-        <img src="/logo.png" className='md:w-20 md:h-20 h-30 w-30 object-contain' alt="Logo" />
+        <img src="/logo.png" className='md:w-20 md:h-20 h-22 w-22 object-contain' alt="Logo" />
       </div>
 
       {/* Left Text */}

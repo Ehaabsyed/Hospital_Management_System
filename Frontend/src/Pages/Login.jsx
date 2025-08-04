@@ -18,7 +18,7 @@ function Login() {
     const toastId = toast.loading("Logging user....")
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, { data }, { withCredentials: true })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`, data, { withCredentials: true })
       .then(response => {
         if (response.data.status) {
           toast.success("Logged In Successfully", { id: toastId })
