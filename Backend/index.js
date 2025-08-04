@@ -11,7 +11,7 @@ import { isAdminauthenticated } from './src/middlewares/auth.js'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
 const app = express()
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174','https://hospital-management-system-nine-kohl.vercel.app/'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174','https://hospital-management-system-nine-kohl.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World! Ready for vercel')
 })
 
 //is token for dashboard
