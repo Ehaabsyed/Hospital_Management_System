@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 })
 
 //is token for dashboard
-app.get('/isAdmin', (req, res) => {
+app.get('/api/isAdmin', (req, res) => {
   const isToken = req.cookies.adminToken
   if (isToken) {
     res.json({ status: true, message: "Admin authorized" })
