@@ -22,6 +22,8 @@ function Login() {
       .then(response => {
         if (response.data.status) {
           toast.success("Logged In Successfully", { id: toastId })
+          console.log(response.data);
+          
           navigate("/")
         } else {
           toast.error(response.data.message, { id: toastId })
