@@ -14,15 +14,10 @@ const app = express()
 const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174','https://hospital-management-system-nine-kohl.vercel.app'];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'https://hospital-management-system-nine-kohl.vercel.app',
   credentials: true,
 }));
+
 app.use(fileUpload({
   useTempFiles:true
 }));
