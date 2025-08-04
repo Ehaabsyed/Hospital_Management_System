@@ -40,7 +40,7 @@ function Register() {
     <div className='min-h-screen w-full gradient flex flex-col md:flex-row justify-center items-center px-4 py-10'>
 
       {/* Logo */}
-      <div className="logo absolute z-10 top-3 md:left-5 left-[50%] -translate-x-[50%]">
+      <div className="logo absolute z-10 top-3 md:left-15 left-[50%] -translate-x-[50%]">
         <img src="/logo.png" className='md:w-20 md:h-20 h-22 w-22 object-contain' alt="Logo" />
       </div>
 
