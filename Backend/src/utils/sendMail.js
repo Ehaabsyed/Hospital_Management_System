@@ -10,8 +10,6 @@ const transporter = nodemailer.createTransport({
     pass: "nfpkagjwnjviowfh", // ✅ App password, not Gmail password
   },
 });
-await transporter.verify();
-console.log("✅ SMTP connected");
 
 /**
  * Sends an email.
