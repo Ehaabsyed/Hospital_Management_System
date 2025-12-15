@@ -1,8 +1,7 @@
 import { appointmentModel } from "../models/appointmentSchema.js";
 import appointmentPendingTemplate from "../templates/appointmentConfirmation.js";
-import appointmentConfirmationTemplate from "../templates/appointmentConfirmation.js";
 import appointmentStatusUpdateTemplate from "../templates/appointmentStatus.js";
-import sendMail from "../utils/sendMail.js";
+import sendMail from "../utils/brevoMail.js";
 
 export const sendAppointment = async (req, res) => {
 
@@ -85,13 +84,14 @@ export const updateStatus = async (req, res) => {
       date: appointment.date,
     });
 
-    await sendMail(appointment.email, `Appointment ${status}`, text, html);
+    // await sendMail(appointment.email, `Appointment ${status}`, text, html);
 
     res.json({
       status: true,
       message: "Appointment status updated successfully",
       data: appointment,
     });
+    sendMail(appointment.email, `Appointment ${status}`, text, html);
   } catch (error) {
     console.error("❌ Error updating status:", error);
     res.json({
