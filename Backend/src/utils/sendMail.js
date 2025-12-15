@@ -3,13 +3,15 @@ import nodemailer from "nodemailer";
 // Create transporter using Gmail SMTP
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465, // ✅ For secure=true
-  secure: true,
+  port: 587, // ✅ For secure=true
+  secure: false, // true for 465, false for other ports
   auth: {
     user: "testehaabsyed@gmail.com",
     pass: "nfpkagjwnjviowfh", // ✅ App password, not Gmail password
   },
 });
+await transporter.verify();
+console.log("✅ SMTP connected");
 
 /**
  * Sends an email.

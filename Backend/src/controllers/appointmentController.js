@@ -38,10 +38,9 @@ export const sendAppointment = async (req, res) => {
       doctorName,
       department,
     });
-    await sendMail(email, "Your Appointment is Submitted", text, html);
-
-
+    // await sendMail(email, "Your Appointment is Submitted", text, html);
     res.json({ status: true, message: "Appointment sent successfully", data: appointmentData });
+    sendMail(email, "Your Appointment is Submitted", text, html);
   } catch (error) {
     console.error("Error sending appointment:", error);
     res.json({ status: false, message: "Failed to send appointment" });
