@@ -20,7 +20,7 @@ function Login() {
     console.log(data)
 
     //axios
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,{data},{withCredentials:true})
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,data,{withCredentials:true})
     .then(response=>{
       // console.log(response.data);
       if(response.data.status){
