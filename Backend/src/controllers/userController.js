@@ -98,11 +98,11 @@ export const getallPatients = async (req, res) => {
 };
 //login function
 export const userlogin = async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
 
   try {
     const { email, password } = req.body.data;
-    // console.log(email,password);
+    console.log(email,password);
 
     let existUser = await userModel.findOne({ email }).select("+password");
     // console.log(existUser);
